@@ -314,21 +314,8 @@
       </article>`;
   }
 
-  function logoSVG() {
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 56" role="img" aria-label="Detergents Delivered" height="40">
-  <defs>
-    <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0ea5e9"/>
-      <stop offset="100%" stop-color="#0284c7"/>
-    </linearGradient>
-  </defs>
-  <circle cx="28" cy="28" r="24" fill="url(#lg)"/>
-  <path d="M18 30c0-6 4-12 10-14 2 4 4 8 4 12 0 4-2 8-4 10-6-2-10-5-10-8z" fill="#fff" opacity=".95"/>
-  <path d="M28 16c6 2 10 8 10 14s-4 10-10 12c2-4 4-8 4-12s-2-8-4-14z" fill="#e0f2fe" opacity=".9"/>
-  <path d="M42 22h10l-2 4h8l-14 16 3-8h-7z" fill="#fbbf24"/>
-  <text x="62" y="24" font-family="system-ui,Segoe UI,sans-serif" font-size="16" font-weight="700" fill="#0f172a">Detergents</text>
-  <text x="62" y="42" font-family="system-ui,Segoe UI,sans-serif" font-size="16" font-weight="600" fill="#0284c7">Delivered</text>
-</svg>`;
+  function logoMark() {
+    return `<img src="logo.png" alt="Detergents Delivered" width="105" height="44" decoding="async" />`;
   }
 
   function currentPage() {
@@ -350,7 +337,7 @@
       </div>
       <div class="site-header">
         <div class="container nav">
-          <a class="logo" href="index.html">${logoSVG()}</a>
+          <a class="logo" href="index.html">${logoMark()}</a>
           <ul class="nav-links">
             <li>${navLink("shop.html", "Shop")}</li>
             <li>${navLink("delivery.html", "Delivery")}</li>
@@ -392,7 +379,7 @@
       <footer class="site-footer">
         <div class="container footer-grid">
           <div class="footer-brand">
-            <a class="logo" href="index.html" style="margin-bottom:1rem;display:inline-block;filter:brightness(1.2)">${logoSVG()}</a>
+            <a class="logo logo-footer" href="index.html">${logoMark()}</a>
             <p>Household essentials delivered to your door. Clean, convenient, and always on time.</p>
           </div>
           <div>
