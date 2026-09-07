@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Website builder (demo) — Detergents Delivered</title>
+  <meta name="description" content="Demo website builder for home page sections. Edits stay in this browser until the real app CMS is live." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.png" type="image/png" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Website builder</h1>
+          <p>Edit home page sections for this demo. Weekly delivery messaging for select Chicagoland counties.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:0 0 2.5rem">
+        <div class="demo-banner" style="margin-top:1.25rem">🎨 <span><strong>Demo builder — edits stay in this browser until the real app CMS is live.</strong> Preview only; the public pages are not overwritten.</span></div>
+        <div class="admin-shell" style="margin-top:1.25rem">
+          <aside class="admin-nav" aria-label="Admin navigation">
+            <div class="admin-brand">Detergents Delivered</div>
+            <div class="admin-demo">Demo admin — not connected to live data</div>
+            <a href="admin.html#dashboard">Dashboard</a>
+            <a href="admin.html#products">Products</a>
+            <a href="admin.html#inventory">Inventory</a>
+            <a href="admin.html#orders">Orders</a>
+            <a href="admin.html#delivery">Delivery settings</a>
+            <a href="website-builder.html" class="active">Website builder</a>
+            <a href="admin.html#settings">Settings</a>
+            <a href="sign-in.html" style="margin-top:1rem;opacity:.8">Sign out (demo)</a>
+          </aside>
+          <div class="admin-main">
+            <div class="wb-layout">
+              <div class="wb-preview">
+                <div class="wb-preview-label">Live preview · Home</div>
+                <div class="wb-preview-body" id="wb-preview"></div>
+              </div>
+              <div class="wb-editor" id="wb-editor">
+                <h2 id="wb-editor-title">Select a section</h2>
+                <p class="wb-empty" id="wb-editor-empty">Click a section in the preview to edit text, visibility, and button targets.</p>
+                <div id="wb-editor-form" hidden></div>
+                <div class="wb-actions">
+                  <button type="button" class="btn btn-primary btn-sm" id="wb-save">Save</button>
+                  <button type="button" class="btn btn-secondary btn-sm" id="wb-reset">Reset to defaults</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    (function () {
+      const STORAGE_KEY = "dd-website-builder-v1";
+
+      const LINK_PRESETS = {
+        shop: { label: "Shop", href: "shop.html" },
+        delivery: { label: "Delivery / ZIP check", href: "delivery.html" },
+        "sign-in": { label: "Sign in", href: "sign-in.html" },
+        custom: { label: "Custom URL", href: "" }
+      };
+
+      const DEFAULTS = {
+        heroBadge: {
+          id: "heroBadge",
+          label: "Hero badge",
+          visible: true,
+          text: "Weekly delivery in select Chicagoland counties"
+        },
+        headline: {
+          id: "headline",
+          label: "Headline",
+          visible: true,
+          text: "Laundry & dish essentials, delivered."
+        },
+        lead: {
+          id: "lead",
+          label: "Lead",
+          visible: true,
+          text: "Skip the store aisle. Liquid, powder, pods, softener, and dish essentials — weekly delivery on scheduled route days — right to your doorstep."
+        },
+        primaryCta: {
+          id: "primaryCta",
+          label: "Primary CTA",
+          visible: true,
+          text: "Shop products",
+          linkTarget: "shop",
+          customUrl: "",
+          intent: "Take shoppers to the product catalog."
+        },
+        secondaryCta: {
+          id: "secondaryCta",
+          label: "Secondary CTA",
+          visible: true,
+          text: "Check delivery area (ZIP)",
+          linkTarget: "delivery",
+          customUrl: "",
+          intent: "Let visitors confirm weekly route coverage by ZIP."
+        },
+        howItWorks: {
+          id: "howItWorks",
+          label: "How it works blurb",
+          visible: true,
+          text: "Three simple steps from empty cabinet to full laundry room. Pick products, choose a weekly scheduled window in select Chicagoland counties (McHenry, Kane & Cook examples), and reorder when you need more."
+        }
+      };
+
+      let state = loadState();
+      let selectedId = "heroBadge";
+
+      function clone(obj) {
+        return JSON.parse(JSON.stringify(obj));
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return clone(DEFAULTS);
+          const parsed = JSON.parse(raw);
+          const merged = clone(DEFAULTS);
+          Object.keys(merged).forEach((key) => {
+            if (parsed[key] && typeof parsed[key] === "object") {
+              merged[key] = Object.assign({}, merged[key], parsed[key]);
+            }
+          });
+          return merged;
+        } catch (e) {
+          return clone(DEFAULTS);
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (window.DD && DD.toast) DD.toast("Saved in this browser");
+      }
+
+      function resolveHref(section) {
+        if (!section) return "#";
+        if (section.linkTarget === "custom") {
+          return (section.customUrl || "").trim() || "#";
+        }
+        const preset = LINK_PRESETS[section.linkTarget];
+        return preset ? preset.href : "#";
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? "" : str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function renderPreview() {
+        const root = document.getElementById("wb-preview");
+        if (!root) return;
+        const order = ["heroBadge", "headline", "lead", "primaryCta", "secondaryCta", "howItWorks"];
+        root.innerHTML = order.map((id) => {
+          const s = state[id];
+          const active = selectedId === id ? " active" : "";
+          const hidden = s.visible ? "" : " hidden-preview";
+          let body = "";
+          if (id === "heroBadge") {
+            body = `<div class="hero-badge">${escapeHtml(s.text)}</div>`;
+          } else if (id === "headline") {
+            body = `<h1>${escapeHtml(s.text)}</h1>`;
+          } else if (id === "lead" || id === "howItWorks") {
+            body = `<p class="lead">${escapeHtml(s.text)}</p>`;
+          } else if (id === "primaryCta") {
+            body = `<div class="wb-cta-row"><a class="btn btn-primary btn-sm" href="${escapeHtml(resolveHref(s))}" onclick="return false">${escapeHtml(s.text)}</a></div>`;
+          } else if (id === "secondaryCta") {
+            body = `<div class="wb-cta-row"><a class="btn btn-secondary btn-sm" href="${escapeHtml(resolveHref(s))}" onclick="return false">${escapeHtml(s.text)}</a></div>`;
+          }
+          return `<div class="wb-section${active}${hidden}" data-section="${id}" role="button" tabindex="0">
+            <div class="wb-tag">${escapeHtml(s.label)}${s.visible ? "" : " · hidden"}</div>
+            ${body}
+          </div>`;
+        }).join("");
+
+        root.querySelectorAll(".wb-section").forEach((el) => {
+          el.addEventListener("click", () => {
+            selectedId = el.dataset.section;
+            render();
+          });
+          el.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              selectedId = el.dataset.section;
+              render();
+            }
+          });
+        });
+      }
+
+      function isCta(id) {
+        return id === "primaryCta" || id === "secondaryCta";
+      }
+
+      function renderEditor() {
+        const title = document.getElementById("wb-editor-title");
+        const empty = document.getElementById("wb-editor-empty");
+        const form = document.getElementById("wb-editor-form");
+        const s = state[selectedId];
+        if (!s) {
+          title.textContent = "Select a section";
+          empty.hidden = false;
+          form.hidden = true;
+          form.innerHTML = "";
+          return;
+        }
+        title.textContent = s.label;
+        empty.hidden = true;
+        form.hidden = false;
+
+        const textLabel = isCta(selectedId) ? "Button label" : "Text";
+        const textTag = selectedId === "lead" || selectedId === "howItWorks" ? "textarea" : "input";
+        let linkFields = "";
+        if (isCta(selectedId)) {
+          const opts = Object.keys(LINK_PRESETS).map((key) => {
+            const selected = s.linkTarget === key ? " selected" : "";
+            return `<option value="${key}"${selected}>${escapeHtml(LINK_PRESETS[key].label)}</option>`;
+          }).join("");
+          linkFields = `
+            <div class="form-row">
+              <label for="wb-link">Button link target</label>
+              <select class="input" id="wb-link">${opts}</select>
+            </div>
+            <div class="form-row" id="wb-custom-wrap" ${s.linkTarget === "custom" ? "" : "hidden"}>
+              <label for="wb-custom">Custom URL</label>
+              <input class="input" id="wb-custom" type="text" placeholder="https://… or page.html" value="${escapeHtml(s.customUrl || "")}" />
+            </div>
+            <div class="form-row">
+              <label for="wb-intent">What should this do?</label>
+              <textarea class="input" id="wb-intent" rows="3" placeholder="Optional note about the intended action">${escapeHtml(s.intent || "")}</textarea>
+              <div class="form-hint">Saved with this section in localStorage (demo CMS intent).</div>
+            </div>`;
+        }
+
+        const textControl = textTag === "textarea"
+          ? `<textarea class="input" id="wb-text" rows="4">${escapeHtml(s.text)}</textarea>`
+          : `<input class="input" id="wb-text" type="text" value="${escapeHtml(s.text)}" />`;
+
+        form.innerHTML = `
+          <div class="wb-showhide">
+            <span style="font-weight:600;font-size:.875rem;color:var(--slate-700)">Show on home preview</span>
+            <label class="toggle" title="Show / hide">
+              <input type="checkbox" id="wb-visible" ${s.visible ? "checked" : ""} />
+              <span></span>
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="wb-text">${textLabel}</label>
+            ${textControl}
+          </div>
+          ${linkFields}
+        `;
+
+        form.querySelector("#wb-visible").addEventListener("change", (e) => {
+          state[selectedId].visible = e.target.checked;
+          renderPreview();
+        });
+        form.querySelector("#wb-text").addEventListener("input", (e) => {
+          state[selectedId].text = e.target.value;
+          renderPreview();
+        });
+        const link = form.querySelector("#wb-link");
+        if (link) {
+          link.addEventListener("change", (e) => {
+            state[selectedId].linkTarget = e.target.value;
+            const wrap = form.querySelector("#wb-custom-wrap");
+            if (wrap) wrap.hidden = e.target.value !== "custom";
+            renderPreview();
+          });
+        }
+        const custom = form.querySelector("#wb-custom");
+        if (custom) {
+          custom.addEventListener("input", (e) => {
+            state[selectedId].customUrl = e.target.value;
+            renderPreview();
+          });
+        }
+        const intent = form.querySelector("#wb-intent");
+        if (intent) {
+          intent.addEventListener("input", (e) => {
+            state[selectedId].intent = e.target.value;
+          });
+        }
+      }
+
+      function render() {
+        renderPreview();
+        renderEditor();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("wb-save").addEventListener("click", () => saveState());
+        document.getElementById("wb-reset").addEventListener("click", () => {
+          state = clone(DEFAULTS);
+          localStorage.removeItem(STORAGE_KEY);
+          selectedId = "heroBadge";
+          render();
+          if (window.DD && DD.toast) DD.toast("Reset to defaults");
+        });
+        render();
+      });
+    })();
+  </script>
+</body>
+</html>
