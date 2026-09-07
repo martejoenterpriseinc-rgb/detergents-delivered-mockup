@@ -50,9 +50,9 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const sample = [
-        { id: "DD-8F2K1A", date: "Aug 28, 2026", status: "delivered", statusLabel: "Delivered", items: "Tide PODS (42 ct), Dawn Platinum (24 oz)", total: 24.98 },
-        { id: "DD-3M9QX2", date: "Sep 2, 2026", status: "transit", statusLabel: "Out for delivery", items: "Persil ProClean (100 oz), Downy Softener (51 oz)", total: 29.98 },
-        { id: "DD-1R7PL4", date: "Sep 5, 2026", status: "processing", statusLabel: "Processing", items: "Gain Flings (48 ct), Unstopables (14.8 oz)", total: 29.48 }
+        { id: "DD-8F2K1A", date: "Aug 28, 2026", status: "delivered", statusLabel: "Delivered", items: "Laundry Pods · Free & Clear · 42 ct, Dish Detergent · Citrus · 28 oz", total: 24.98 },
+        { id: "DD-3M9QX2", date: "Sep 2, 2026", status: "transit", statusLabel: "Out for delivery", items: "Liquid Detergent · Lavender · 100 oz, Fabric Softener · Spring · 50 oz", total: 29.98 },
+        { id: "DD-1R7PL4", date: "Sep 5, 2026", status: "processing", statusLabel: "Processing", items: "Laundry Pods · Spring · 48 ct, Scent Beads · Clean Linen · 18 oz", total: 29.48 }
       ];
       let last = null;
       try { last = JSON.parse(sessionStorage.getItem("dd_last_order") || "null"); } catch {}

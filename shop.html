@@ -25,16 +25,20 @@
           <aside class="filters" id="filters">
             <div class="filter-group">
               <h3>Category</h3>
-              <label><input type="checkbox" name="category" value="liquid" /> Liquid detergent</label>
-              <label><input type="checkbox" name="category" value="pods" /> Pods &amp; pacs</label>
-              <label><input type="checkbox" name="category" value="powder" /> Powder</label>
-              <label><input type="checkbox" name="category" value="softener" /> Softener</label>
-              <label><input type="checkbox" name="category" value="beads" /> Scent beads</label>
+              <label><input type="checkbox" name="category" value="laundry" /> Laundry</label>
               <label><input type="checkbox" name="category" value="dish" /> Dish care</label>
             </div>
             <div class="filter-group">
-              <h3>Brand</h3>
-              <div id="brand-filters"></div>
+              <h3>Type</h3>
+              <div id="type-filters"></div>
+            </div>
+            <div class="filter-group">
+              <h3>Scent</h3>
+              <div id="scent-filters"></div>
+            </div>
+            <div class="filter-group">
+              <h3>Form</h3>
+              <div id="form-filters"></div>
             </div>
             <button class="btn btn-ghost btn-sm btn-block" type="button" id="clear-filters">Clear filters</button>
           </aside>
@@ -59,14 +63,34 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const params = new URLSearchParams(location.search);
-      const brands = [...new Set(DD.PRODUCTS.map(p => p.brand))].sort();
-      document.getElementById("brand-filters").innerHTML = brands.map(b =>
-        `<label><input type="checkbox" name="brand" value="${b}" /> ${b}</label>`
-      ).join("");
+
+      function fillChecks(id, name, values) {
+        document.getElementById(id).innerHTML = values.map(v =>
+          `<label><input type="checkbox" name="${name}" value="${v}" /> ${v}</label>`
+        ).join("");
+      }
+      fillChecks("type-filters", "type", [...new Set(DD.PRODUCTS.map(p => p.type))].sort());
+      fillChecks("scent-filters", "scent", [...new Set(DD.PRODUCTS.map(p => p.scent))].sort());
+      fillChecks("form-filters", "form", [...new Set(DD.PRODUCTS.map(p => p.form))].sort());
 
       const preCat = params.get("category");
       if (preCat) {
         const cb = document.querySelector(`input[name="category"][value="${preCat}"]`);
+        if (cb) cb.checked = true;
+      }
+      const preType = params.get("type");
+      if (preType) {
+        const cb = document.querySelector(`input[name="type"][value="${preType}"]`);
+        if (cb) cb.checked = true;
+      }
+      const preScent = params.get("scent");
+      if (preScent) {
+        const cb = document.querySelector(`input[name="scent"][value="${preScent}"]`);
+        if (cb) cb.checked = true;
+      }
+      const preForm = params.get("form");
+      if (preForm) {
+        const cb = document.querySelector(`input[name="form"][value="${preForm}"]`);
         if (cb) cb.checked = true;
       }
 
@@ -77,9 +101,13 @@
       function render() {
         let list = [...DD.PRODUCTS];
         const cats = selected("category");
-        const brandSel = selected("brand");
+        const types = selected("type");
+        const scents = selected("scent");
+        const forms = selected("form");
         if (cats.length) list = list.filter(p => cats.includes(p.category));
-        if (brandSel.length) list = list.filter(p => brandSel.includes(p.brand));
+        if (types.length) list = list.filter(p => types.includes(p.type));
+        if (scents.length) list = list.filter(p => scents.includes(p.scent));
+        if (forms.length) list = list.filter(p => forms.includes(p.form));
         const sort = document.getElementById("sort").value;
         if (sort === "price-asc") list.sort((a,b) => a.variants[0].price - b.variants[0].price);
         if (sort === "price-desc") list.sort((a,b) => b.variants[0].price - a.variants[0].price);

@@ -38,16 +38,16 @@
         const v = p.variants[variantIdx];
         root.innerHTML = `
           <nav style="padding:1.25rem 0 .5rem;font-size:.875rem;color:var(--slate-500)">
-            <a href="shop.html">Shop</a> / <span>${p.brand}</span> / <strong style="color:var(--slate-700)">${p.name}</strong>
+            <a href="shop.html">Shop</a> / <span>${p.type}</span> / <strong style="color:var(--slate-700)">${p.name}</strong>
           </nav>
           <div class="pdp">
             <div class="pdp-gallery" aria-hidden="true">${p.emoji}</div>
             <div>
-              <div class="brand" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate-500)">${p.brand}</div>
+              <div class="brand" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate-500)">${p.type} · ${p.form}</div>
               <h1 style="font-size:clamp(1.4rem,3vw,1.85rem);margin:.35rem 0 .5rem">${p.name}</h1>
               ${p.tag ? `<span class="chip" style="margin-bottom:1rem">${p.tag}</span>` : ""}
               <p style="color:var(--slate-600)">${p.description}</p>
-              <p style="font-size:.9rem;color:var(--slate-500)">Scent: <strong>${p.scent}</strong> · Category: <strong>${p.category}</strong></p>
+              <p style="font-size:.9rem;color:var(--slate-500)">Scent: <strong>${p.scent}</strong> · Form: <strong>${p.form}</strong> · Category: <strong>${p.category}</strong></p>
               <div class="price" style="font-size:1.75rem;margin:1rem 0">${DD.money(v.price)}</div>
               <div style="font-weight:600;font-size:.875rem;margin-bottom:.35rem">Size / count</div>
               <div class="variant-options" id="variants">
@@ -82,7 +82,9 @@
             id: p.id,
             variantId: vv.id,
             name: p.name,
-            brand: p.brand,
+            type: p.type,
+            form: p.form,
+            scent: p.scent,
             variantLabel: vv.label,
             price: vv.price,
             emoji: p.emoji,

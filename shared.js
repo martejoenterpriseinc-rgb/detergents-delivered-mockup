@@ -12,29 +12,61 @@
 
   const PRODUCTS = [
     {
-      id: "tide-liquid-orig",
-      name: "Tide Original Liquid Detergent",
-      brand: "Tide",
-      category: "liquid",
-      scent: "Original",
+      id: "liquid-fresh-64",
+      name: "Liquid Detergent · Fresh · 64 oz",
+      type: "Liquid Detergent",
+      category: "laundry",
+      form: "Liquid",
+      scent: "Fresh",
       emoji: "🧴",
       tag: "Bestseller",
-      description: "America's #1 detergent. Powerful stain removal in every wash with a classic fresh scent.",
+      description: "Everyday liquid detergent with a clean fresh scent. Strong on stains, gentle on fabrics.",
       variants: [
-        { id: "50oz", label: "50 oz (32 loads)", price: 11.99 },
+        { id: "64oz", label: "64 oz (32 loads)", price: 11.99 },
         { id: "100oz", label: "100 oz (64 loads)", price: 19.99 },
         { id: "150oz", label: "150 oz (96 loads)", price: 27.99 }
       ]
     },
     {
-      id: "tide-pods-spring",
-      name: "Tide PODS Spring Meadow",
-      brand: "Tide",
-      category: "pods",
-      scent: "Spring Meadow",
+      id: "liquid-lavender-100",
+      name: "Liquid Detergent · Lavender · 100 oz",
+      type: "Liquid Detergent",
+      category: "laundry",
+      form: "Liquid",
+      scent: "Lavender",
+      emoji: "🌿",
+      tag: "Eco",
+      description: "Plant-based liquid detergent with a calming lavender scent. Tough on dirt, gentle on skin.",
+      variants: [
+        { id: "64oz", label: "64 oz (35 loads)", price: 12.99 },
+        { id: "100oz", label: "100 oz (66 loads)", price: 21.99 }
+      ]
+    },
+    {
+      id: "liquid-freeclear-60",
+      name: "Liquid Detergent · Free & Clear · 60 oz",
+      type: "Liquid Detergent",
+      category: "laundry",
+      form: "Liquid",
+      scent: "Free & Clear",
+      emoji: "🤍",
+      tag: "Sensitive",
+      description: "Dye-free and perfume-free liquid detergent. Formulated for sensitive skin.",
+      variants: [
+        { id: "60oz", label: "60 oz (32 loads)", price: 10.49 },
+        { id: "120oz", label: "120 oz (64 loads)", price: 17.99 }
+      ]
+    },
+    {
+      id: "pods-freeclear-42",
+      name: "Laundry Pods · Free & Clear · 42 ct",
+      type: "Laundry Pods",
+      category: "laundry",
+      form: "Pods",
+      scent: "Free & Clear",
       emoji: "🫧",
       tag: "Popular",
-      description: "Pre-measured PAC pods with detergent, stain remover, and brightener in one. No measuring, no mess.",
+      description: "Pre-measured laundry pods with no dyes or heavy fragrances. Drop in and wash — no measuring.",
       variants: [
         { id: "16ct", label: "16 count", price: 9.49 },
         { id: "42ct", label: "42 count", price: 18.99 },
@@ -42,42 +74,15 @@
       ]
     },
     {
-      id: "persil-proclean",
-      name: "Persil ProClean Liquid",
-      brand: "Persil",
-      category: "liquid",
-      scent: "Fresh Scent",
-      emoji: "💙",
+      id: "pods-spring-48",
+      name: "Laundry Pods · Spring · 48 ct",
+      type: "Laundry Pods",
+      category: "laundry",
+      form: "Pods",
+      scent: "Spring",
+      emoji: "🌸",
       tag: null,
-      description: "Deep clean technology that removes 40 tough stains. Trusted by European families for generations.",
-      variants: [
-        { id: "65oz", label: "65 oz (40 loads)", price: 13.49 },
-        { id: "100oz", label: "100 oz (62 loads)", price: 18.99 }
-      ]
-    },
-    {
-      id: "armhammer-powder",
-      name: "Arm & Hammer Clean Burst Powder",
-      brand: "Arm & Hammer",
-      category: "powder",
-      scent: "Clean Burst",
-      emoji: "📦",
-      tag: "Value",
-      description: "Baking soda powered cleaning that fights odors and leaves clothes fresh. Great value for large families.",
-      variants: [
-        { id: "50lb", label: "50 loads", price: 8.99 },
-        { id: "120lb", label: "120 loads", price: 16.49 }
-      ]
-    },
-    {
-      id: "gain-flings",
-      name: "Gain Flings Moonlight Breeze",
-      brand: "Gain",
-      category: "pods",
-      scent: "Moonlight Breeze",
-      emoji: "🌙",
-      tag: null,
-      description: "3-in-1 laundry pacs with Oxi Boost and Febreze. Irresistible scent that lasts for weeks.",
+      description: "3-in-1 laundry pods with detergent, brightener, and a light spring scent that lasts.",
       variants: [
         { id: "25ct", label: "25 count", price: 11.99 },
         { id: "48ct", label: "48 count", price: 19.49 },
@@ -85,104 +90,111 @@
       ]
     },
     {
-      id: "downy-ultra",
-      name: "Downy Ultra Softener April Fresh",
-      brand: "Downy",
-      category: "softener",
-      scent: "April Fresh",
-      emoji: "🌸",
+      id: "powder-original-93",
+      name: "Powder Detergent · Original · 93 oz",
+      type: "Powder Detergent",
+      category: "laundry",
+      form: "Powder",
+      scent: "Original",
+      emoji: "📦",
+      tag: "Value",
+      description: "Classic powder detergent with baking-soda odor control. Great value for large households.",
+      variants: [
+        { id: "50oz", label: "50 oz (50 loads)", price: 8.99 },
+        { id: "93oz", label: "93 oz (93 loads)", price: 16.49 }
+      ]
+    },
+    {
+      id: "softener-spring-50",
+      name: "Fabric Softener · Spring · 50 oz",
+      type: "Fabric Softener",
+      category: "laundry",
+      form: "Softener",
+      scent: "Spring",
+      emoji: "💧",
       tag: null,
-      description: "Leaves clothes soft, static-free, and smelling fresh. Concentrated formula lasts longer.",
+      description: "Liquid fabric softener that leaves clothes soft, static-free, and lightly scented.",
       variants: [
         { id: "34oz", label: "34 oz (51 loads)", price: 7.99 },
-        { id: "51oz", label: "51 oz (77 loads)", price: 10.99 },
+        { id: "50oz", label: "50 oz (77 loads)", price: 10.99 },
         { id: "77oz", label: "77 oz (120 loads)", price: 14.99 }
       ]
     },
     {
-      id: "downy-unstopables",
-      name: "Downy Unstopables Scent Beads",
-      brand: "Downy",
-      category: "beads",
-      scent: "Fresh",
+      id: "softener-cleanlinen-64",
+      name: "Fabric Softener · Clean Linen · 64 oz",
+      type: "Fabric Softener",
+      category: "laundry",
+      form: "Softener",
+      scent: "Clean Linen",
+      emoji: "🧺",
+      tag: null,
+      description: "Affordable fabric softener with a clean linen scent for everyday loads.",
+      variants: [
+        { id: "32oz", label: "32 oz", price: 3.99 },
+        { id: "64oz", label: "64 oz", price: 6.49 }
+      ]
+    },
+    {
+      id: "beads-cleanlinen-18",
+      name: "Scent Beads · Clean Linen · 18 oz",
+      type: "Scent Beads",
+      category: "laundry",
+      form: "Beads",
+      scent: "Clean Linen",
       emoji: "✨",
       tag: "New",
-      description: "In-wash scent boosters that keep fabrics smelling fresh for up to 12 weeks. Just toss in with detergent.",
+      description: "In-wash scent beads that keep fabrics smelling fresh for weeks. Toss in with your detergent.",
       variants: [
-        { id: "14oz", label: "14.8 oz", price: 9.99 },
-        { id: "26oz", label: "26.5 oz", price: 15.99 }
+        { id: "18oz", label: "18 oz", price: 9.99 },
+        { id: "26oz", label: "26 oz", price: 15.99 }
       ]
     },
     {
-      id: "method-lavender",
-      name: "Method Lavender Liquid Detergent",
-      brand: "Method",
-      category: "liquid",
-      scent: "Lavender",
-      emoji: "🌿",
-      tag: "Eco",
-      description: "Plant-based formula in a stylish bottle. Tough on dirt, gentle on the planet. Hypoallergenic.",
+      id: "beads-fresh-14",
+      name: "Scent Beads · Fresh · 14 oz",
+      type: "Scent Beads",
+      category: "laundry",
+      form: "Beads",
+      scent: "Fresh",
+      emoji: "🌙",
+      tag: null,
+      description: "Scent-boosting beads with a crisp fresh fragrance. Use with any detergent.",
       variants: [
-        { id: "53oz", label: "53.5 oz (35 loads)", price: 12.99 },
-        { id: "100oz", label: "100 oz (66 loads)", price: 21.99 }
+        { id: "14oz", label: "14 oz", price: 8.99 },
+        { id: "26oz", label: "26 oz", price: 14.99 }
       ]
     },
     {
-      id: "dawn-platinum",
-      name: "Dawn Platinum Dish Soap",
-      brand: "Dawn",
+      id: "dish-citrus-28",
+      name: "Dish Detergent · Citrus · 28 oz",
+      type: "Dish Detergent",
       category: "dish",
-      scent: "Refreshing Rain",
+      form: "Liquid",
+      scent: "Citrus",
       emoji: "🍽️",
       tag: null,
-      description: "3x more grease cleaning power. Cuts through stuck-on food. Also trusted for wildlife rescue.",
+      description: "Grease-cutting dish detergent with a bright citrus scent. Concentrated formula for hand washing.",
       variants: [
-        { id: "16oz", label: "16.2 oz", price: 4.49 },
-        { id: "24oz", label: "24 oz", price: 5.99 },
+        { id: "16oz", label: "16 oz", price: 4.49 },
+        { id: "28oz", label: "28 oz", price: 5.99 },
         { id: "56oz", label: "56 oz", price: 9.99 }
       ]
     },
     {
-      id: "finish-quantum",
-      name: "Finish Quantum Dishwasher Pods",
-      brand: "Finish",
+      id: "dishwasher-fresh-45",
+      name: "Dishwasher Pods · Fresh · 45 ct",
+      type: "Dishwasher Pods",
       category: "dish",
+      form: "Pods",
       scent: "Fresh",
       emoji: "🔆",
       tag: null,
-      description: "Pre-soakers + scrubbers + glass protectors. Spotless dishes even in hard water.",
+      description: "All-in-one dishwasher pods for spotless plates and glasses — even in hard water.",
       variants: [
         { id: "20ct", label: "20 count", price: 8.99 },
         { id: "45ct", label: "45 count", price: 16.99 },
         { id: "82ct", label: "82 count", price: 26.99 }
-      ]
-    },
-    {
-      id: "all-free-clear",
-      name: "all free clear Liquid Detergent",
-      brand: "all",
-      category: "liquid",
-      scent: "Unscented",
-      emoji: "🤍",
-      tag: "Sensitive",
-      description: "Dermatologist-recommended. Free of dyes and perfumes. Gentle enough for sensitive skin.",
-      variants: [
-        { id: "60oz", label: "60 oz (32 loads)", price: 10.49 },
-        { id: "120oz", label: "120 oz (64 loads)", price: 17.99 }
-      ]
-    },
-    {
-      id: "snuggle-blue",
-      name: "Snuggle Blue Sparkle Softener",
-      brand: "Snuggle",
-      category: "softener",
-      scent: "Blue Sparkle",
-      emoji: "🐻",
-      tag: null,
-      description: "Softness and lasting freshness your family will love. Affordable comfort in every load.",
-      variants: [
-        { id: "32oz", label: "32 oz", price: 3.99 },
-        { id: "64oz", label: "64 oz", price: 6.49 }
       ]
     }
   ];
@@ -231,7 +243,9 @@
         id: item.id,
         variantId: item.variantId,
         name: item.name,
-        brand: item.brand,
+        type: item.type,
+        form: item.form,
+        scent: item.scent,
         variantLabel: item.variantLabel,
         price: item.price,
         emoji: item.emoji,
@@ -297,13 +311,13 @@
     const price = p.variants[0].price;
     const tag = p.tag ? `<span class="badge-tag">${p.tag}</span>` : "";
     return `
-      <article class="product-card" data-brand="${p.brand}" data-category="${p.category}">
+      <article class="product-card" data-type="${p.type}" data-category="${p.category}" data-form="${p.form}" data-scent="${p.scent}">
         <a href="product.html?id=${encodeURIComponent(p.id)}" class="thumb" aria-label="${p.name}">
           ${tag}
           <span aria-hidden="true">${p.emoji}</span>
         </a>
         <div class="body">
-          <div class="brand">${p.brand}</div>
+          <div class="brand">${p.type} · ${p.form}</div>
           <h3><a href="product.html?id=${encodeURIComponent(p.id)}">${p.name}</a></h3>
           <div class="meta">${p.scent} · ${p.category}</div>
           <div class="price-row">
@@ -385,8 +399,8 @@
           <div>
             <h4>Shop</h4>
             <a href="shop.html">All products</a>
-            <a href="shop.html?category=liquid">Liquid detergent</a>
-            <a href="shop.html?category=pods">Pods &amp; pacs</a>
+            <a href="shop.html?category=laundry">Laundry</a>
+            <a href="shop.html?type=Liquid%20Detergent">Liquid detergent</a>
             <a href="shop.html?category=dish">Dish care</a>
           </div>
           <div>
