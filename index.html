@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detergents Delivered — Clean essentials to your door</title>
+  <meta name="description" content="Household detergents, softeners, and dish care delivered to your door. Fast, reliable, and always stocked." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <div class="hero-badge">🚚 Same-day delivery in select cities</div>
+            <h1>Laundry &amp; dish essentials, delivered.</h1>
+            <p class="lead">Skip the store aisle. Get Tide, Gain, Dawn, and more — scheduled or on-demand — right to your doorstep.</p>
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="shop.html">Shop products</a>
+              <a class="btn btn-secondary" href="delivery.html">Check delivery ZIP</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <div class="hero-visual">
+              <div class="bubble" style="width:80px;height:80px;top:12%;left:10%"></div>
+              <div class="bubble" style="width:48px;height:48px;bottom:18%;right:14%"></div>
+              <div class="bubble" style="width:32px;height:32px;top:28%;right:22%"></div>
+              <div class="product-stack">
+                <div class="product-emoji" aria-hidden="true">🧴🫧✨</div>
+                <small>Detergent · Softener · Dish care</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>How it works</h2>
+            <p>Three simple steps from empty cabinet to full laundry room.</p>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <h3>Pick your brands</h3>
+              <p>Browse liquids, pods, powder, softeners, scent beads, and dish soap from names you trust.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <h3>We deliver fast</h3>
+              <p>Enter your ZIP for same-day or next-day windows. Free delivery on orders $35+.</p>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <h3>Never run out</h3>
+              <p>Reorder in one tap from your account, or set reminders so you’re always stocked.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-alt">
+        <div class="container">
+          <div class="section-head">
+            <h2>Featured products</h2>
+            <p>Top picks for busy households — ready to ship today.</p>
+          </div>
+          <div class="product-grid" id="featured-grid"></div>
+          <p style="text-align:center;margin-top:2rem">
+            <a class="btn btn-secondary" href="shop.html">View all products</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div class="container">
+          <h2>See if we deliver to you</h2>
+          <p>We’re live in Chicago, Dallas, Houston, and expanding. Check your ZIP in seconds.</p>
+          <a class="btn btn-secondary" href="delivery.html" style="border-color:transparent">Check ZIP code</a>
+        </div>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const featured = DD.PRODUCTS.filter((_, i) => i < 4);
+      document.getElementById("featured-grid").innerHTML = featured.map(DD.productCardHTML).join("");
+    });
+  </script>
+</body>
+</html>

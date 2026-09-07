@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Account — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Your account</h1>
+          <p>Sample account shell for this UI mockup.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:2rem 0 3rem;max-width:720px">
+        <div class="demo-banner">ℹ️ This is a demo account view with sample orders. Sign-in is not live in this mockup.</div>
+
+        <div style="background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem;box-shadow:var(--shadow)">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="width:56px;height:56px;border-radius:50%;background:var(--sky-100);display:grid;place-items:center;font-size:1.5rem">👤</div>
+            <div>
+              <h2 style="font-size:1.15rem;margin:0">Alex Rivera</h2>
+              <p style="margin:0;color:var(--slate-500);font-size:.9rem">alex@example.com · Chicago, IL 60601</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 style="font-size:1.15rem;margin-bottom:1rem">Recent orders</h2>
+        <div id="orders"></div>
+
+        <h2 style="font-size:1.15rem;margin:2rem 0 1rem">Quick links</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:.75rem">
+          <a class="btn btn-secondary btn-sm" href="shop.html">Reorder favorites</a>
+          <a class="btn btn-secondary btn-sm" href="delivery.html">Delivery areas</a>
+          <a class="btn btn-secondary btn-sm" href="contact.html">Get help</a>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const sample = [
+        { id: "DD-8F2K1A", date: "Aug 28, 2026", status: "delivered", statusLabel: "Delivered", items: "Tide PODS (42 ct), Dawn Platinum (24 oz)", total: 24.98 },
+        { id: "DD-3M9QX2", date: "Sep 2, 2026", status: "transit", statusLabel: "Out for delivery", items: "Persil ProClean (100 oz), Downy Softener (51 oz)", total: 29.98 },
+        { id: "DD-1R7PL4", date: "Sep 5, 2026", status: "processing", statusLabel: "Processing", items: "Gain Flings (48 ct), Unstopables (14.8 oz)", total: 29.48 }
+      ];
+      let last = null;
+      try { last = JSON.parse(sessionStorage.getItem("dd_last_order") || "null"); } catch {}
+      if (last && last.orderId) {
+        sample.unshift({
+          id: last.orderId,
+          date: "Sep 7, 2026",
+          status: "processing",
+          statusLabel: "Demo order",
+          items: "Your demo checkout order",
+          total: last.total || 0
+        });
+      }
+      document.getElementById("orders").innerHTML = sample.map(o => `
+        <div class="order-card">
+          <div class="row">
+            <div>
+              <strong>${o.id}</strong>
+              <div class="sub" style="font-size:.85rem;color:var(--slate-500)">${o.date}</div>
+            </div>
+            <span class="status ${o.status}">${o.statusLabel}</span>
+          </div>
+          <p style="margin:.85rem 0 .35rem;font-size:.9375rem;color:var(--slate-600)">${o.items}</p>
+          <div style="font-weight:700">${DD.money(o.total)}</div>
+        </div>
+      `).join("");
+    });
+  </script>
+</body>
+</html>

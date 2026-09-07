@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Contact us</h1>
+          <p>We typically reply within one business day.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:2rem 0 3.5rem;max-width:560px">
+        <div id="contact-success" class="alert-success" style="display:none">
+          Thanks! Your message was recorded in this demo (nothing was emailed). We’ll be in touch when the real app is live.
+        </div>
+        <form id="contact-form" style="background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow)">
+          <div class="form-row"><label for="name">Name</label><input class="input" id="name" required /></div>
+          <div class="form-row"><label for="email">Email</label><input class="input" type="email" id="email" required /></div>
+          <div class="form-row">
+            <label for="topic">Topic</label>
+            <select class="input" id="topic">
+              <option>Order help</option>
+              <option>Delivery question</option>
+              <option>Product question</option>
+              <option>Partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-row"><label for="message">Message</label><textarea class="input" id="message" rows="5" required></textarea></div>
+          <button class="btn btn-primary btn-block" type="submit">Send message</button>
+          <p class="form-hint">Demo form — submissions stay in your browser only.</p>
+        </form>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("contact-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        document.getElementById("contact-success").style.display = "block";
+        e.target.reset();
+        DD.toast("Message sent (demo)");
+      });
+    });
+  </script>
+</body>
+</html>

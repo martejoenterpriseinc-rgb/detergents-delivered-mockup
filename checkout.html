@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Checkout</h1>
+          <p>Demo checkout flow — no real payments.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:2rem 0 3rem" id="checkout-root"></div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("checkout-root");
+      const cart = DD.getCart();
+
+      if (!cart.length) {
+        root.innerHTML = `<div class="empty-state"><div class="emoji">🛒</div><h2>Nothing to checkout</h2><a class="btn btn-primary" href="shop.html">Shop now</a></div>`;
+        return;
+      }
+
+      let confirmed = false;
+      const sub = DD.cartSubtotal();
+      const deliveryFee = sub >= 35 ? 0 : 4.99;
+
+      function showForm() {
+        root.innerHTML = `
+          <div class="demo-banner">⚠️ <span><strong>Demo — payments not live.</strong> This is a UI mockup. No charges will be made and no order will be fulfilled.</span></div>
+          <div class="cart-layout">
+            <form id="checkout-form">
+              <h2 style="font-size:1.15rem;margin-bottom:1rem">Delivery address</h2>
+              <div class="form-grid two">
+                <div class="form-row"><label for="first">First name</label><input class="input" id="first" required value="Alex" /></div>
+                <div class="form-row"><label for="last">Last name</label><input class="input" id="last" required value="Rivera" /></div>
+              </div>
+              <div class="form-row"><label for="email">Email</label><input class="input" type="email" id="email" required value="alex@example.com" /></div>
+              <div class="form-row"><label for="phone">Phone</label><input class="input" type="tel" id="phone" value="(312) 555-0142" /></div>
+              <div class="form-row"><label for="street">Street address</label><input class="input" id="street" required value="123 Lake Shore Dr" /></div>
+              <div class="form-grid two">
+                <div class="form-row"><label for="city">City</label><input class="input" id="city" required value="Chicago" /></div>
+                <div class="form-row"><label for="state">State</label><input class="input" id="state" required value="IL" maxlength="2" /></div>
+              </div>
+              <div class="form-row">
+                <label for="zip">ZIP code</label>
+                <input class="input" id="zip" required pattern="\\d{5}" value="60601" maxlength="5" />
+                <div class="form-hint">Demo ZIPs we deliver to: 60601, 75201, 77001, and more.</div>
+                <div id="zip-msg" class="zip-result"></div>
+              </div>
+              <h2 style="font-size:1.15rem;margin:1.5rem 0 1rem">Payment (demo)</h2>
+              <div class="form-row"><label for="card">Card number</label><input class="input" id="card" value="4242 4242 4242 4242" disabled /></div>
+              <div class="form-grid two">
+                <div class="form-row"><label for="exp">Expiry</label><input class="input" id="exp" value="12 / 28" disabled /></div>
+                <div class="form-row"><label for="cvc">CVC</label><input class="input" id="cvc" value="123" disabled /></div>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit" style="margin-top:1rem">Place demo order</button>
+            </form>
+            <aside class="cart-summary">
+              <h2 style="font-size:1.125rem;margin-bottom:1rem">Order summary</h2>
+              ${cart.map(i => `
+                <div class="summary-row"><span>${i.qty}× ${i.name}</span><span>${DD.money(i.price * i.qty)}</span></div>
+              `).join("")}
+              <div class="summary-row"><span>Subtotal</span><span>${DD.money(sub)}</span></div>
+              <div class="summary-row"><span>Delivery</span><span id="del-display">${deliveryFee === 0 ? "FREE" : DD.money(deliveryFee)}</span></div>
+              <div class="summary-row total"><span>Total</span><span id="total-display">${DD.money(sub + deliveryFee)}</span></div>
+            </aside>
+          </div>`;
+
+        const zipInput = document.getElementById("zip");
+        const zipMsg = document.getElementById("zip-msg");
+        function validateZip() {
+          const r = DD.checkZip(zipInput.value);
+          zipMsg.className = "zip-result " + (r.ok ? "yes" : "no");
+          zipMsg.textContent = r.msg;
+          return r.ok;
+        }
+        zipInput.addEventListener("input", validateZip);
+        validateZip();
+
+        document.getElementById("checkout-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (!validateZip()) {
+            DD.toast("Please use a ZIP we deliver to");
+            return;
+          }
+          const orderId = "DD-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+          sessionStorage.setItem("dd_last_order", JSON.stringify({
+            orderId,
+            total: sub + (DD.checkZip(zipInput.value).ok && sub < 35 ? 4.99 : (sub >= 35 ? 0 : 4.99)),
+            email: document.getElementById("email").value,
+            zip: zipInput.value
+          }));
+          DD.clearCart();
+          showConfirm(orderId, document.getElementById("email").value);
+        });
+      }
+
+      function showConfirm(orderId, email) {
+        root.innerHTML = `
+          <div class="confirm-card">
+            <div class="check">✓</div>
+            <h1 style="font-size:1.5rem">Order placed (demo)</h1>
+            <p style="color:var(--slate-600)">Thanks! This is a mockup confirmation. No payment was processed.</p>
+            <p><strong>Order #${orderId}</strong></p>
+            <p class="form-hint">A confirmation would be sent to ${email} in production.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:1.5rem">
+              <a class="btn btn-primary" href="account.html">View account</a>
+              <a class="btn btn-secondary" href="shop.html">Keep shopping</a>
+            </div>
+          </div>`;
+      }
+
+      showForm();
+    });
+  </script>
+</body>
+</html>

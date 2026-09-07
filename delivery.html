@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delivery Areas — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Delivery areas</h1>
+          <p>Check if we deliver to your ZIP — same-day in select cities.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:2.5rem 0 3.5rem;max-width:560px">
+        <div style="background:#fff;border:1px solid var(--slate-200);border-radius:var(--radius);padding:1.75rem;box-shadow:var(--shadow)">
+          <h2 style="font-size:1.15rem">Enter your ZIP code</h2>
+          <p style="color:var(--slate-500);font-size:.9375rem">Try demo ZIPs like <strong>60601</strong> (Chicago), <strong>75201</strong> (Dallas), or <strong>77001</strong> (Houston).</p>
+          <form id="zip-form" style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem">
+            <input class="input" id="zip" name="zip" inputmode="numeric" pattern="\d{5}" maxlength="5" placeholder="e.g. 60601" required style="flex:1;min-width:140px" />
+            <button class="btn btn-primary" type="submit">Check</button>
+          </form>
+          <div id="zip-result" class="zip-result"></div>
+        </div>
+
+        <div style="margin-top:2rem">
+          <h2 style="font-size:1.15rem">Where we deliver (demo)</h2>
+          <ul style="color:var(--slate-600);padding-left:1.2rem">
+            <li><strong>Chicago metro</strong> — 60601–60605 and select nearby ZIPs</li>
+            <li><strong>Dallas</strong> — 75201–75205</li>
+            <li><strong>Houston</strong> — 77001–77005</li>
+            <li><strong>Also demo:</strong> 10001–10003 (NYC), 90210 (LA), 94102 (SF)</li>
+          </ul>
+          <p style="color:var(--slate-500);font-size:.9rem">Free delivery on orders $35+. Standard delivery fee $4.99 under that.</p>
+        </div>
+
+        <div style="margin-top:2rem;text-align:center">
+          <a class="btn btn-secondary" href="shop.html">Shop now</a>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("zip-form");
+      const result = document.getElementById("zip-result");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const r = DD.checkZip(document.getElementById("zip").value);
+        result.className = "zip-result " + (r.ok ? "yes" : "no");
+        result.textContent = r.msg;
+      });
+    });
+  </script>
+</body>
+</html>

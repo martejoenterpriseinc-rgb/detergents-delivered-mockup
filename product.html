@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="container" id="pdp-root">
+        <p style="padding:3rem 0;text-align:center;color:var(--slate-500)">Loading product…</p>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const id = new URLSearchParams(location.search).get("id") || DD.PRODUCTS[0].id;
+      const p = DD.findProduct(id);
+      const root = document.getElementById("pdp-root");
+      if (!p) {
+        root.innerHTML = `<div class="empty-state" style="margin:2rem 0"><div class="emoji">😕</div><h2>Product not found</h2><p><a class="btn btn-primary" href="shop.html">Back to shop</a></p></div>`;
+        return;
+      }
+      document.title = p.name + " — Detergents Delivered";
+      let variantIdx = 0;
+      let qty = 1;
+
+      function render() {
+        const v = p.variants[variantIdx];
+        root.innerHTML = `
+          <nav style="padding:1.25rem 0 .5rem;font-size:.875rem;color:var(--slate-500)">
+            <a href="shop.html">Shop</a> / <span>${p.brand}</span> / <strong style="color:var(--slate-700)">${p.name}</strong>
+          </nav>
+          <div class="pdp">
+            <div class="pdp-gallery" aria-hidden="true">${p.emoji}</div>
+            <div>
+              <div class="brand" style="font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--slate-500)">${p.brand}</div>
+              <h1 style="font-size:clamp(1.4rem,3vw,1.85rem);margin:.35rem 0 .5rem">${p.name}</h1>
+              ${p.tag ? `<span class="chip" style="margin-bottom:1rem">${p.tag}</span>` : ""}
+              <p style="color:var(--slate-600)">${p.description}</p>
+              <p style="font-size:.9rem;color:var(--slate-500)">Scent: <strong>${p.scent}</strong> · Category: <strong>${p.category}</strong></p>
+              <div class="price" style="font-size:1.75rem;margin:1rem 0">${DD.money(v.price)}</div>
+              <div style="font-weight:600;font-size:.875rem;margin-bottom:.35rem">Size / count</div>
+              <div class="variant-options" id="variants">
+                ${p.variants.map((vr, i) =>
+                  `<button type="button" class="variant-btn${i===variantIdx?" active":""}" data-i="${i}">${vr.label}</button>`
+                ).join("")}
+              </div>
+              <div class="qty-row">
+                <div class="qty-control">
+                  <button type="button" id="qty-minus" aria-label="Decrease">−</button>
+                  <span id="qty-val">${qty}</span>
+                  <button type="button" id="qty-plus" aria-label="Increase">+</button>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="button" id="add-btn" style="min-width:200px">Add to cart</button>
+              <a class="btn btn-ghost" href="cart.html" style="margin-left:.5rem">View cart</a>
+              <p class="form-hint" style="margin-top:1.25rem">🚚 Free delivery on orders $35+. <a href="delivery.html">Check your ZIP</a></p>
+            </div>
+          </div>`;
+
+        document.getElementById("variants").addEventListener("click", (e) => {
+          const btn = e.target.closest("[data-i]");
+          if (!btn) return;
+          variantIdx = Number(btn.dataset.i);
+          render();
+        });
+        document.getElementById("qty-minus").onclick = () => { qty = Math.max(1, qty - 1); document.getElementById("qty-val").textContent = qty; };
+        document.getElementById("qty-plus").onclick = () => { qty += 1; document.getElementById("qty-val").textContent = qty; };
+        document.getElementById("add-btn").onclick = () => {
+          const vv = p.variants[variantIdx];
+          DD.addToCart({
+            id: p.id,
+            variantId: vv.id,
+            name: p.name,
+            brand: p.brand,
+            variantLabel: vv.label,
+            price: vv.price,
+            emoji: p.emoji,
+            qty
+          });
+        };
+      }
+      render();
+    });
+  </script>
+</body>
+</html>

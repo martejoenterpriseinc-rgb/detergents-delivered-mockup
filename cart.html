@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cart — Detergents Delivered</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Your cart</h1>
+          <p>Review items before checkout.</p>
+        </div>
+      </div>
+      <div class="container cart-layout" id="cart-root"></div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.getElementById("cart-root");
+
+      function render() {
+        const cart = DD.getCart();
+        if (!cart.length) {
+          root.innerHTML = `
+            <div class="empty-state" style="grid-column:1/-1">
+              <div class="emoji">🛒</div>
+              <h2>Your cart is empty</h2>
+              <p style="color:var(--slate-500)">Add detergents, softeners, or dish care to get started.</p>
+              <a class="btn btn-primary" href="shop.html">Browse shop</a>
+            </div>`;
+          return;
+        }
+        const sub = DD.cartSubtotal();
+        const delivery = sub >= 35 ? 0 : 4.99;
+        const total = sub + delivery;
+        root.innerHTML = `
+          <div>
+            ${cart.map(item => `
+              <div class="cart-item" data-id="${item.id}" data-vid="${item.variantId}">
+                <div class="thumb">${item.emoji}</div>
+                <div>
+                  <h3>${item.name}</h3>
+                  <div class="sub">${item.brand} · ${item.variantLabel}</div>
+                  <div class="sub" style="margin-top:.5rem">${DD.money(item.price)} each</div>
+                  <div class="qty-control" style="margin-top:.75rem">
+                    <button type="button" class="qty-dec" aria-label="Decrease">−</button>
+                    <span>${item.qty}</span>
+                    <button type="button" class="qty-inc" aria-label="Increase">+</button>
+                  </div>
+                </div>
+                <div style="text-align:right">
+                  <div class="price">${DD.money(item.price * item.qty)}</div>
+                  <button type="button" class="btn btn-ghost btn-sm remove" style="margin-top:.75rem">Remove</button>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+          <aside class="cart-summary">
+            <h2 style="font-size:1.125rem;margin-bottom:1rem">Order summary</h2>
+            <div class="summary-row"><span>Subtotal</span><span>${DD.money(sub)}</span></div>
+            <div class="summary-row"><span>Delivery</span><span>${delivery === 0 ? "FREE" : DD.money(delivery)}</span></div>
+            ${sub < 35 ? `<p class="form-hint">Add ${DD.money(35 - sub)} more for free delivery.</p>` : ""}
+            <div class="summary-row total"><span>Total</span><span>${DD.money(total)}</span></div>
+            <a class="btn btn-primary btn-block" href="checkout.html" style="margin-top:1rem">Checkout</a>
+            <a class="btn btn-ghost btn-block" href="shop.html" style="margin-top:.5rem">Continue shopping</a>
+          </aside>`;
+
+        root.querySelectorAll(".cart-item").forEach(row => {
+          const id = row.dataset.id;
+          const vid = row.dataset.vid;
+          const item = cart.find(c => c.id === id && c.variantId === vid);
+          row.querySelector(".qty-dec").onclick = () => { DD.setQty(id, vid, item.qty - 1); render(); };
+          row.querySelector(".qty-inc").onclick = () => { DD.setQty(id, vid, item.qty + 1); render(); };
+          row.querySelector(".remove").onclick = () => { DD.removeItem(id, vid); render(); };
+        });
+      }
+      render();
+    });
+  </script>
+</body>
+</html>
