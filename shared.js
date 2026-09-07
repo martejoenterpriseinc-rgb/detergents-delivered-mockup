@@ -305,12 +305,12 @@
     if (DEMO_ZIPS.has(z)) {
       return {
         ok: true,
-        msg: "Good news — we deliver to " + z + ". We serve select counties in the Chicagoland area (currently McHenry, Kane & Cook examples). Weekly scheduled windows set by the business (e.g. Tue/Thu) — not same-day or on-demand."
+        msg: "Good news — we deliver to " + z + ". We serve select counties in the Chicagoland area (currently McHenry, Kane & Cook examples). Weekly scheduled windows set by the business (e.g. Tue/Thu)."
       };
     }
     return {
       ok: false,
-      msg: "We don’t deliver to " + z + ". We serve select counties in the Chicagoland area — currently McHenry, Kane & Cook as active examples (expandable). Weekly scheduled routes — not same-day or on-demand. Try a demo ZIP like 60050, 60120, or 60601."
+      msg: "We don’t deliver to " + z + ". We serve select counties in the Chicagoland area — currently McHenry, Kane & Cook as active examples (expandable). Weekly scheduled routes. Try a demo ZIP like 60050, 60120, or 60601."
     };
   }
 
@@ -354,7 +354,7 @@
     if (!el) return;
     el.innerHTML = `
       <div class="topbar">
-        Select Chicagoland counties · Weekly scheduled routes · Windows set by business (e.g. Tue/Thu) · Not same-day · <a href="delivery.html">Check your ZIP</a>
+        Select Chicagoland counties · Weekly scheduled routes · Windows set by business (e.g. Tue/Thu) · <a href="delivery.html">Check your ZIP</a>
       </div>
       <div class="site-header">
         <div class="container nav">
@@ -404,7 +404,7 @@
         <div class="container footer-grid">
           <div class="footer-brand">
             <a class="logo logo-footer" href="index.html">${logoMark()}</a>
-            <p>We serve select counties in the Chicagoland area — currently McHenry, Kane &amp; Cook as examples. Weekly scheduled windows set by the business (e.g. Tue/Thu) — not same-day or on-demand.</p>
+            <p>We serve select counties in the Chicagoland area — currently McHenry, Kane &amp; Cook as examples. Weekly scheduled windows set by the business (e.g. Tue/Thu).</p>
           </div>
           <div>
             <h4>Shop</h4>
