@@ -3,11 +3,15 @@
   "use strict";
 
   const CART_KEY = "dd_cart_v1";
+  // Demo ZIPs in select McHenry, Kane, and Cook County (IL) areas — not entire counties
   const DEMO_ZIPS = new Set([
+    // McHenry County area
+    "60050", "60051",
+    // Kane County area
+    "60120", "60123", "60174",
+    // Cook County area
     "60601", "60602", "60603", "60604", "60605",
-    "75201", "75202", "75203", "75204", "75205",
-    "77001", "77002", "77003", "77004", "77005",
-    "10001", "10002", "10003", "90210", "94102"
+    "60016", "60018"
   ]);
 
   const PRODUCTS = [
@@ -299,11 +303,14 @@
     const z = String(zip || "").trim();
     if (!/^\d{5}$/.test(z)) return { ok: false, msg: "Enter a valid 5-digit ZIP code." };
     if (DEMO_ZIPS.has(z)) {
-      return { ok: true, msg: "Great news — we deliver to " + z + "! Same-day and next-day options available." };
+      return {
+        ok: true,
+        msg: "Good news — we deliver to " + z + ". Local delivery in select McHenry, Kane & Cook County areas. Scheduled delivery — not same-day."
+      };
     }
     return {
       ok: false,
-      msg: "We're not in " + z + " yet. Try a demo ZIP like 60601, 75201, or 77001 — or check back soon as we expand."
+      msg: "We don’t deliver to " + z + ". Service is limited to select McHenry, Kane, and Cook County areas — scheduled delivery, not same-day. Try a demo ZIP like 60050, 60120, or 60601."
     };
   }
 
@@ -347,7 +354,7 @@
     if (!el) return;
     el.innerHTML = `
       <div class="topbar">
-        Free delivery on orders $35+ · <a href="delivery.html">Check your ZIP</a>
+        Local delivery in select McHenry, Kane &amp; Cook County areas · Scheduled — not same-day · <a href="delivery.html">Check your ZIP</a>
       </div>
       <div class="site-header">
         <div class="container nav">
@@ -394,7 +401,7 @@
         <div class="container footer-grid">
           <div class="footer-brand">
             <a class="logo logo-footer" href="index.html">${logoMark()}</a>
-            <p>Household essentials delivered to your door. Clean, convenient, and always on time.</p>
+            <p>Local delivery in select McHenry, Kane &amp; Cook County areas. Scheduled delivery — not same-day.</p>
           </div>
           <div>
             <h4>Shop</h4>
