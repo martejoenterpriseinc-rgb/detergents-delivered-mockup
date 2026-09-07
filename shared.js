@@ -3,7 +3,7 @@
   "use strict";
 
   const CART_KEY = "dd_cart_v1";
-  // Demo ZIPs in select McHenry, Kane, and Cook County (IL) areas — not entire counties
+  // Demo ZIPs in currently served Chicagoland counties (McHenry, Kane, Cook examples) — not entire counties
   const DEMO_ZIPS = new Set([
     // McHenry County area
     "60050", "60051",
@@ -305,12 +305,12 @@
     if (DEMO_ZIPS.has(z)) {
       return {
         ok: true,
-        msg: "Good news — we deliver to " + z + ". Weekly scheduled routes in select McHenry, Kane & Cook County areas. Scheduled delivery windows are set by the business (e.g. Tue/Thu) — not same-day or on-demand."
+        msg: "Good news — we deliver to " + z + ". We serve select counties in the Chicagoland area (currently McHenry, Kane & Cook examples). Weekly scheduled windows set by the business (e.g. Tue/Thu) — not same-day or on-demand."
       };
     }
     return {
       ok: false,
-      msg: "We don’t deliver to " + z + ". Service is limited to select McHenry, Kane, and Cook County areas on weekly scheduled routes — not same-day or on-demand. Try a demo ZIP like 60050, 60120, or 60601."
+      msg: "We don’t deliver to " + z + ". We serve select counties in the Chicagoland area — currently McHenry, Kane & Cook as active examples (expandable). Weekly scheduled routes — not same-day or on-demand. Try a demo ZIP like 60050, 60120, or 60601."
     };
   }
 
@@ -354,7 +354,7 @@
     if (!el) return;
     el.innerHTML = `
       <div class="topbar">
-        Weekly routes · select McHenry, Kane &amp; Cook County · Windows set by business (e.g. Tue/Thu) · Not same-day · <a href="delivery.html">Check your ZIP</a>
+        Select Chicagoland counties · Weekly scheduled routes · Windows set by business (e.g. Tue/Thu) · Not same-day · <a href="delivery.html">Check your ZIP</a>
       </div>
       <div class="site-header">
         <div class="container nav">
@@ -366,6 +366,7 @@
             <li>${navLink("contact.html", "Contact")}</li>
           </ul>
           <div class="nav-actions">
+            <a class="btn btn-primary btn-sm nav-signin" href="sign-in.html">Sign in</a>
             <a class="icon-btn" href="account.html" aria-label="Account" title="Account">
               <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg>
             </a>
@@ -380,10 +381,12 @@
           ${navLink("index.html", "Home")}
           ${navLink("shop.html", "Shop")}
           ${navLink("delivery.html", "Delivery Areas")}
+          <a href="sign-in.html" class="mobile-signin">Sign in</a>
           ${navLink("account.html", "Account")}
           ${navLink("faq.html", "FAQ")}
           ${navLink("contact.html", "Contact")}
           ${navLink("cart.html", "Cart")}
+          ${navLink("admin.html", "Admin (demo)")}
         </div>
       </div>`;
     const toggle = document.getElementById("menu-toggle");
@@ -401,7 +404,7 @@
         <div class="container footer-grid">
           <div class="footer-brand">
             <a class="logo logo-footer" href="index.html">${logoMark()}</a>
-            <p>Weekly scheduled routes in select McHenry, Kane &amp; Cook County areas. Scheduled delivery windows set by the business (e.g. Tue/Thu) — not same-day or on-demand.</p>
+            <p>We serve select counties in the Chicagoland area — currently McHenry, Kane &amp; Cook as examples. Weekly scheduled windows set by the business (e.g. Tue/Thu) — not same-day or on-demand.</p>
           </div>
           <div>
             <h4>Shop</h4>
@@ -416,6 +419,12 @@
             <a href="faq.html">FAQ</a>
             <a href="contact.html">Contact us</a>
             <a href="refunds.html">Refunds</a>
+          </div>
+          <div>
+            <h4>Account</h4>
+            <a href="sign-in.html">Sign in</a>
+            <a href="account.html">Account</a>
+            <a href="admin.html">Admin</a>
           </div>
           <div>
             <h4>Legal</h4>

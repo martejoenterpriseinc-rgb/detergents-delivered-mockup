@@ -17,7 +17,7 @@
       <div class="page-header">
         <div class="container">
           <h1>Delivery areas</h1>
-          <p>Weekly scheduled routes in select McHenry, Kane &amp; Cook County areas only. Delivery windows are set by the business (e.g. Tue/Thu) — not same-day or on-demand.</p>
+          <p>We serve <strong>select counties in the Chicagoland area</strong> — currently including McHenry, Kane &amp; Cook as active examples, with more counties expandable over time. Weekly scheduled routes with business-set windows (e.g. Tue/Thu) — not same-day or on-demand.</p>
         </div>
       </div>
       <div class="container" style="padding:2.5rem 0 3.5rem;max-width:560px">
@@ -33,12 +33,53 @@
 
         <div style="margin-top:2rem">
           <h2 style="font-size:1.15rem">Where we deliver (demo)</h2>
-          <p style="color:var(--slate-600);font-size:.9375rem;margin-bottom:.75rem">We deliver only in <strong>select areas</strong> of these Illinois counties — not entire counties or all of Chicagoland:</p>
-          <ul style="color:var(--slate-600);padding-left:1.2rem">
-            <li><strong>McHenry County</strong> — e.g. 60050, 60051</li>
-            <li><strong>Kane County</strong> — e.g. 60120, 60123, 60174</li>
-            <li><strong>Cook County</strong> — e.g. 60601–60605, 60016, 60018</li>
-          </ul>
+          <p style="color:var(--slate-600);font-size:.9375rem;margin-bottom:.75rem">We serve <strong>select counties in the Chicagoland area</strong>. Coverage is limited to select ZIP codes — not entire counties. McHenry, Kane, and Cook are shown as <strong>currently served</strong> examples; additional counties can be enabled over time.</p>
+          <div class="county-checklist" aria-label="Chicagoland county coverage (mockup)">
+            <div class="county-checklist-head">
+              <h3>Chicagoland counties</h3>
+              <span class="chip">Mockup only · not a live admin</span>
+            </div>
+            <p class="county-checklist-note">Checklist UI for planning coverage. Checked = currently served; unchecked = coming soon / not enabled.</p>
+            <ul class="county-list">
+              <li class="county-item served">
+                <label><input type="checkbox" checked disabled /> <span class="county-name">Cook County</span></label>
+                <span class="county-status served-status">Currently served</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">DuPage County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+              <li class="county-item served">
+                <label><input type="checkbox" checked disabled /> <span class="county-name">Kane County</span></label>
+                <span class="county-status served-status">Currently served</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">Lake County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+              <li class="county-item served">
+                <label><input type="checkbox" checked disabled /> <span class="county-name">McHenry County</span></label>
+                <span class="county-status served-status">Currently served</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">Will County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">Kendall County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">Grundy County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+              <li class="county-item soon">
+                <label><input type="checkbox" disabled /> <span class="county-name">DeKalb County</span></label>
+                <span class="county-status soon-status">Coming soon / not enabled</span>
+              </li>
+            </ul>
+            <p class="county-examples" style="color:var(--slate-500);font-size:.875rem;margin-top:.85rem">Demo ZIPs in currently served counties: McHenry (60050, 60051), Kane (60120, 60123, 60174), Cook (60601–60605, 60016, 60018).</p>
+          </div>
           <h2 style="font-size:1.15rem;margin-top:1.75rem">Weekly scheduled delivery windows</h2>
           <p style="color:var(--slate-600);font-size:.9375rem;margin-bottom:.75rem">We run <strong>weekly scheduled routes</strong> on select days — not same-day or on-demand. <strong>Scheduled delivery windows</strong> are set by the business. Example route days:</p>
           <ul style="color:var(--slate-600);padding-left:1.2rem">

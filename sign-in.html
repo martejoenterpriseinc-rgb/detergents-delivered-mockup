@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign in — Detergents Delivered</title>
+  <meta name="description" content="Demo sign-in for the Detergents Delivered UI mockup. Not real authentication." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.png" type="image/png" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Sign in</h1>
+          <p>Demo login only — no real authentication or live backend.</p>
+        </div>
+      </div>
+      <div class="container auth-wrap">
+        <div class="demo-banner">ℹ️ <span><strong>UI mockup.</strong> Nothing is submitted to a server. This flow demonstrates first-login credential change before the demo admin shell.</span></div>
+        <div class="auth-card">
+          <h1>Welcome back</h1>
+          <p class="lead-sm">Sign in to continue to the demo account / admin experience.</p>
+          <div class="prefill-hint">
+            Prefill hint (not real auth): bootstrap admin email
+            <code>admin@detergentsdelivered.com</code>
+            — use any password for this mockup.
+          </div>
+          <form id="sign-in-form">
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input class="input" type="email" id="email" name="email" required
+                value="admin@detergentsdelivered.com"
+                placeholder="admin@detergentsdelivered.com"
+                autocomplete="username" />
+            </div>
+            <div class="form-row">
+              <label for="password">Password</label>
+              <input class="input" type="password" id="password" name="password" required
+                placeholder="Any password (demo)"
+                autocomplete="current-password" />
+              <div class="form-hint">Demo only — credentials are not verified or stored.</div>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Sign in</button>
+          </form>
+          <p style="margin:1.25rem 0 0;font-size:.875rem;color:var(--slate-500);text-align:center">
+            Looking for your orders? <a href="account.html">View demo account</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("sign-in-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        // First-login forced change UX (mock) — no real auth
+        location.href = "change-credentials.html";
+      });
+    });
+  </script>
+</body>
+</html>

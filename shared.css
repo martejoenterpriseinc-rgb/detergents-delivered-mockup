@@ -469,7 +469,7 @@ select.input:focus, .input:focus, textarea.input:focus {
   margin-bottom: 2rem;
 }
 @media (min-width: 700px) {
-  .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; }
 }
 .site-footer h4 { color: #fff; font-size: .875rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 1rem; }
 .site-footer a { color: var(--slate-400); display: block; padding: .25rem 0; font-size: .9375rem; }
@@ -515,4 +515,183 @@ select.input:focus, .input:focus, textarea.input:focus {
 .alert-success {
   background: #dcfce7; border: 1px solid #86efac; color: #166534;
   padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;
+}
+
+/* Auth / sign-in */
+.nav-signin {
+  white-space: nowrap;
+  padding: .5rem 1rem;
+}
+.mobile-signin {
+  display: block;
+  margin: .35rem 1rem .5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--sky-500), var(--sky-700));
+  color: #fff !important;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: .7rem 1rem !important;
+}
+.mobile-signin:hover { color: #fff !important; opacity: .95; }
+
+.auth-wrap {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+.auth-card {
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+  box-shadow: var(--shadow);
+}
+.auth-card h1 { font-size: 1.5rem; margin-bottom: .35rem; }
+.auth-card .lead-sm { color: var(--slate-500); font-size: .9375rem; margin-bottom: 1.25rem; }
+.prefill-hint {
+  background: var(--sky-50);
+  border: 1px dashed var(--sky-200);
+  color: var(--sky-800);
+  border-radius: var(--radius-sm);
+  padding: .75rem .9rem;
+  font-size: .8125rem;
+  margin-bottom: 1rem;
+}
+.prefill-hint code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .8rem;
+  background: #fff;
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  border: 1px solid var(--sky-200);
+}
+
+/* Admin shell */
+.admin-shell { display: grid; gap: 0; min-height: 70vh; }
+@media (min-width: 860px) {
+  .admin-shell { grid-template-columns: 240px 1fr; }
+}
+.admin-nav {
+  background: var(--slate-900);
+  color: var(--slate-300);
+  padding: 1.25rem 1rem;
+}
+.admin-nav .admin-brand {
+  color: #fff; font-weight: 700; font-size: .95rem;
+  margin-bottom: .35rem;
+}
+.admin-nav .admin-demo {
+  font-size: .75rem; color: var(--amber-400);
+  margin-bottom: 1.25rem; line-height: 1.4;
+}
+.admin-nav a {
+  display: block; color: var(--slate-300);
+  padding: .55rem .75rem; border-radius: var(--radius-sm);
+  font-size: .9rem; font-weight: 500; margin-bottom: .15rem;
+}
+.admin-nav a:hover, .admin-nav a.active {
+  background: rgba(255,255,255,.08); color: #fff;
+}
+.admin-main { padding: 1.5rem 1.25rem 2.5rem; background: var(--slate-50); }
+.admin-panel {
+  background: #fff; border: 1px solid var(--slate-200);
+  border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow);
+  margin-bottom: 1rem;
+}
+.admin-panel h2 { font-size: 1.1rem; margin: 0 0 .75rem; }
+.admin-stats {
+  display: grid; gap: .75rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-bottom: 1rem;
+}
+.admin-stat {
+  background: #fff; border: 1px solid var(--slate-200);
+  border-radius: var(--radius); padding: 1rem; box-shadow: var(--shadow);
+}
+.admin-stat .label { font-size: .75rem; color: var(--slate-500); text-transform: uppercase; letter-spacing: .04em; }
+.admin-stat .value { font-size: 1.5rem; font-weight: 700; color: var(--slate-900); margin-top: .25rem; }
+.county-toggles { display: grid; gap: .5rem; }
+.county-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: .65rem .85rem; border: 1px solid var(--slate-200); border-radius: var(--radius-sm);
+  background: var(--slate-50);
+}
+.county-row label { font-weight: 600; color: var(--slate-800); cursor: pointer; }
+.toggle {
+  position: relative; width: 44px; height: 24px; flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle span {
+  position: absolute; inset: 0; background: var(--slate-300); border-radius: 999px;
+  cursor: pointer; transition: background .2s;
+}
+.toggle span::after {
+  content: ""; position: absolute; width: 18px; height: 18px; border-radius: 50%;
+  background: #fff; top: 3px; left: 3px; transition: transform .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.toggle input:checked + span { background: var(--sky-600); }
+.toggle input:checked + span::after { transform: translateX(20px); }
+.admin-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+.admin-table th, .admin-table td {
+  text-align: left; padding: .65rem .5rem; border-bottom: 1px solid var(--slate-200);
+}
+.admin-table th { color: var(--slate-500); font-weight: 600; font-size: .75rem; text-transform: uppercase; }
+
+
+/* County coverage checklist (delivery mockup) */
+.county-checklist {
+  background: #fff;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.35rem 1.35rem;
+  box-shadow: var(--shadow);
+  margin-bottom: .25rem;
+}
+.county-checklist-head {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem;
+  justify-content: space-between; margin-bottom: .35rem;
+}
+.county-checklist-head h3 {
+  font-size: 1rem; margin: 0; color: var(--slate-900);
+}
+.county-checklist-note {
+  color: var(--slate-500); font-size: .8125rem; margin: 0 0 .85rem;
+}
+.county-list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: .45rem;
+}
+.county-item {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .55rem .7rem;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius-sm);
+  background: var(--slate-50);
+}
+.county-item.served {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+.county-item label {
+  display: flex; align-items: center; gap: .55rem;
+  font-size: .9375rem; color: var(--slate-800); cursor: default;
+}
+.county-item input[type="checkbox"] {
+  width: 1.05rem; height: 1.05rem; accent-color: var(--green-600);
+  flex-shrink: 0;
+}
+.county-name { font-weight: 600; }
+.county-status {
+  font-size: .75rem; font-weight: 600; white-space: nowrap;
+  padding: .2rem .5rem; border-radius: 999px;
+}
+.served-status {
+  background: #dcfce7; color: #166534;
+}
+.soon-status {
+  background: var(--slate-100); color: var(--slate-500);
+}
+@media (max-width: 480px) {
+  .county-item { flex-direction: column; align-items: flex-start; }
 }

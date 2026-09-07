@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin (demo) — Detergents Delivered</title>
+  <meta name="description" content="Demo admin shell for Detergents Delivered. Not connected to live data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="icon" href="logo.png" type="image/png" />
+</head>
+<body>
+  <div class="page-shell">
+    <div id="site-header"></div>
+    <main class="page-main">
+      <div class="page-header">
+        <div class="container">
+          <h1>Admin</h1>
+          <p><strong>Demo admin — not connected to live data.</strong> No Stripe, database, or inventory sync.</p>
+        </div>
+      </div>
+      <div class="container" style="padding:0 0 2rem">
+        <div class="demo-banner" style="margin-top:1.25rem">⚠️ <span><strong>Demo admin — not connected to live data.</strong> Toggles and forms are UI-only placeholders. Catalog stays brand-free. Delivery is weekly scheduled routes in select counties — not same-day.</span></div>
+        <div class="admin-shell">
+          <aside class="admin-nav" aria-label="Admin navigation">
+            <div class="admin-brand">Detergents Delivered</div>
+            <div class="admin-demo">Demo admin — not connected to live data</div>
+            <a href="#dashboard" class="active" data-panel="dashboard">Dashboard</a>
+            <a href="#products" data-panel="products">Products</a>
+            <a href="#inventory" data-panel="inventory">Inventory</a>
+            <a href="#orders" data-panel="orders">Orders</a>
+            <a href="#delivery" data-panel="delivery">Delivery settings</a>
+            <a href="#settings" data-panel="settings">Settings</a>
+            <a href="sign-in.html" style="margin-top:1rem;opacity:.8">Sign out (demo)</a>
+          </aside>
+          <div class="admin-main">
+            <section id="panel-dashboard" class="admin-panel-view">
+              <div class="admin-stats">
+                <div class="admin-stat"><div class="label">Orders today</div><div class="value">12</div></div>
+                <div class="admin-stat"><div class="label">Open carts</div><div class="value">5</div></div>
+                <div class="admin-stat"><div class="label">Low stock SKUs</div><div class="value">3</div></div>
+                <div class="admin-stat"><div class="label">Next route day</div><div class="value" style="font-size:1.15rem">Thu</div></div>
+              </div>
+              <div class="admin-panel">
+                <h2>Dashboard</h2>
+                <p style="color:var(--slate-600);margin:0">Sample overview for the weekly route business. Figures are static placeholders — not live metrics.</p>
+              </div>
+            </section>
+
+            <section id="panel-products" class="admin-panel-view" hidden>
+              <div class="admin-panel">
+                <h2>Products</h2>
+                <p class="form-hint" style="margin-bottom:1rem">Brand-free catalog (demo). Not synced to a database.</p>
+                <table class="admin-table">
+                  <thead>
+                    <tr><th>Name</th><th>Type</th><th>From</th><th></th></tr>
+                  </thead>
+                  <tbody id="admin-products"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="panel-inventory" class="admin-panel-view" hidden>
+              <div class="admin-panel">
+                <h2>Inventory</h2>
+                <p class="form-hint" style="margin-bottom:1rem">Placeholder stock levels — not connected to live inventory.</p>
+                <table class="admin-table">
+                  <thead>
+                    <tr><th>SKU</th><th>On hand</th><th>Reorder at</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>liquid-fresh-64</td><td>48</td><td>20</td><td>OK</td></tr>
+                    <tr><td>pods-freeclear-42</td><td>12</td><td>15</td><td style="color:var(--amber-500);font-weight:600">Low</td></tr>
+                    <tr><td>dish-citrus-28</td><td>8</td><td>12</td><td style="color:var(--amber-500);font-weight:600">Low</td></tr>
+                    <tr><td>softener-spring-50</td><td>36</td><td>10</td><td>OK</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="panel-orders" class="admin-panel-view" hidden>
+              <div class="admin-panel">
+                <h2>Orders</h2>
+                <p class="form-hint" style="margin-bottom:1rem">Sample orders for weekly scheduled delivery — not live fulfillment data.</p>
+                <table class="admin-table">
+                  <thead>
+                    <tr><th>Order</th><th>Customer</th><th>Window</th><th>Total</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>DD-8F2K1A</td><td>Alex R.</td><td>Thu · Morning</td><td>$24.98</td><td>Delivered</td></tr>
+                    <tr><td>DD-3M9QX2</td><td>Jordan L.</td><td>Tue · Afternoon</td><td>$29.98</td><td>Out for delivery</td></tr>
+                    <tr><td>DD-1R7PL4</td><td>Sam K.</td><td>Thu · Morning</td><td>$29.48</td><td>Processing</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section id="panel-delivery" class="admin-panel-view" hidden>
+              <div class="admin-panel">
+                <h2>Delivery settings</h2>
+                <p class="form-hint" style="margin-bottom:1rem">Chicagoland county coverage toggles (placeholders). Service is <strong>weekly</strong> with business-set day/windows — <strong>no same-day</strong>.</p>
+                <h3 style="font-size:.95rem;margin:0 0 .65rem">County coverage (demo toggles)</h3>
+                <div class="county-toggles" id="county-toggles">
+                  <div class="county-row">
+                    <label for="co-mchenry">McHenry County (select areas)</label>
+                    <label class="toggle"><input type="checkbox" id="co-mchenry" checked /><span></span></label>
+                  </div>
+                  <div class="county-row">
+                    <label for="co-kane">Kane County (select areas)</label>
+                    <label class="toggle"><input type="checkbox" id="co-kane" checked /><span></span></label>
+                  </div>
+                  <div class="county-row">
+                    <label for="co-cook">Cook County (select areas)</label>
+                    <label class="toggle"><input type="checkbox" id="co-cook" checked /><span></span></label>
+                  </div>
+                  <div class="county-row">
+                    <label for="co-dupage">DuPage County</label>
+                    <label class="toggle"><input type="checkbox" id="co-dupage" /><span></span></label>
+                  </div>
+                  <div class="county-row">
+                    <label for="co-lake">Lake County</label>
+                    <label class="toggle"><input type="checkbox" id="co-lake" /><span></span></label>
+                  </div>
+                  <div class="county-row">
+                    <label for="co-will">Will County</label>
+                    <label class="toggle"><input type="checkbox" id="co-will" /><span></span></label>
+                  </div>
+                </div>
+              </div>
+              <div class="admin-panel">
+                <h3 style="font-size:.95rem;margin:0 0 .65rem">Weekly route day &amp; windows (placeholders)</h3>
+                <div class="form-grid two">
+                  <div class="form-row">
+                    <label for="route-day">Primary route day</label>
+                    <select class="input" id="route-day">
+                      <option>Tuesday</option>
+                      <option selected>Thursday</option>
+                      <option>Tuesday &amp; Thursday</option>
+                    </select>
+                  </div>
+                  <div class="form-row">
+                    <label for="window-am">Morning window</label>
+                    <input class="input" id="window-am" value="9:00 AM – 12:00 PM" />
+                  </div>
+                  <div class="form-row">
+                    <label for="window-pm">Afternoon window</label>
+                    <input class="input" id="window-pm" value="1:00 PM – 5:00 PM" />
+                  </div>
+                  <div class="form-row">
+                    <label for="cutoff">Order cutoff (before route day)</label>
+                    <input class="input" id="cutoff" value="Monday 6:00 PM" />
+                  </div>
+                </div>
+                <p class="form-hint" style="margin-top:.75rem">Not same-day or on-demand. Changes here do not save — demo UI only.</p>
+                <button class="btn btn-secondary btn-sm" type="button" id="save-delivery">Save settings (demo)</button>
+              </div>
+            </section>
+
+            <section id="panel-settings" class="admin-panel-view" hidden>
+              <div class="admin-panel">
+                <h2>Settings</h2>
+                <p style="color:var(--slate-600)">Store profile, notifications, and integrations would live here. This mockup does not connect Stripe, email, or a database.</p>
+                <ul style="color:var(--slate-600);padding-left:1.2rem">
+                  <li>Payments: not connected (no Stripe)</li>
+                  <li>Inventory sync: not connected</li>
+                  <li>Customer accounts: demo only</li>
+                </ul>
+                <a class="btn btn-ghost btn-sm" href="change-credentials.html">Change credentials (demo)</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+  </div>
+  <script src="shared.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tbody = document.getElementById("admin-products");
+      if (tbody && window.DD) {
+        tbody.innerHTML = DD.PRODUCTS.slice(0, 8).map(p => `
+          <tr>
+            <td>${p.name}</td>
+            <td>${p.type}</td>
+            <td>${DD.money(p.variants[0].price)}</td>
+            <td><a href="product.html?id=${encodeURIComponent(p.id)}">View</a></td>
+          </tr>
+        `).join("");
+      }
+
+      const links = document.querySelectorAll(".admin-nav a[data-panel]");
+      const panels = document.querySelectorAll(".admin-panel-view");
+      function show(id) {
+        panels.forEach(p => { p.hidden = p.id !== "panel-" + id; });
+        links.forEach(a => a.classList.toggle("active", a.dataset.panel === id));
+      }
+      links.forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          show(a.dataset.panel);
+          history.replaceState(null, "", "#" + a.dataset.panel);
+        });
+      });
+      const hash = (location.hash || "#dashboard").replace("#", "");
+      show(["dashboard","products","inventory","orders","delivery","settings"].includes(hash) ? hash : "dashboard");
+
+      const saveBtn = document.getElementById("save-delivery");
+      if (saveBtn) {
+        saveBtn.addEventListener("click", () => {
+          DD.toast("Demo only — settings not saved");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
