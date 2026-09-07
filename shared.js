@@ -305,12 +305,12 @@
     if (DEMO_ZIPS.has(z)) {
       return {
         ok: true,
-        msg: "Good news — we deliver to " + z + ". Local delivery in select McHenry, Kane & Cook County areas. Scheduled delivery — not same-day."
+        msg: "Good news — we deliver to " + z + ". Weekly scheduled routes in select McHenry, Kane & Cook County areas. Scheduled delivery windows are set by the business (e.g. Tue/Thu) — not same-day or on-demand."
       };
     }
     return {
       ok: false,
-      msg: "We don’t deliver to " + z + ". Service is limited to select McHenry, Kane, and Cook County areas — scheduled delivery, not same-day. Try a demo ZIP like 60050, 60120, or 60601."
+      msg: "We don’t deliver to " + z + ". Service is limited to select McHenry, Kane, and Cook County areas on weekly scheduled routes — not same-day or on-demand. Try a demo ZIP like 60050, 60120, or 60601."
     };
   }
 
@@ -354,7 +354,7 @@
     if (!el) return;
     el.innerHTML = `
       <div class="topbar">
-        Local delivery in select McHenry, Kane &amp; Cook County areas · Scheduled — not same-day · <a href="delivery.html">Check your ZIP</a>
+        Weekly routes · select McHenry, Kane &amp; Cook County · Windows set by business (e.g. Tue/Thu) · Not same-day · <a href="delivery.html">Check your ZIP</a>
       </div>
       <div class="site-header">
         <div class="container nav">
@@ -401,7 +401,7 @@
         <div class="container footer-grid">
           <div class="footer-brand">
             <a class="logo logo-footer" href="index.html">${logoMark()}</a>
-            <p>Local delivery in select McHenry, Kane &amp; Cook County areas. Scheduled delivery — not same-day.</p>
+            <p>Weekly scheduled routes in select McHenry, Kane &amp; Cook County areas. Scheduled delivery windows set by the business (e.g. Tue/Thu) — not same-day or on-demand.</p>
           </div>
           <div>
             <h4>Shop</h4>

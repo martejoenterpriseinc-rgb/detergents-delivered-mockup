@@ -45,7 +45,7 @@
           <div class="cart-layout">
             <form id="checkout-form">
               <h2 style="font-size:1.15rem;margin-bottom:.35rem">Delivery address</h2>
-              <p class="form-hint" style="margin-bottom:1rem">Local delivery in select McHenry, Kane &amp; Cook County areas. Scheduled — not same-day.</p>
+              <p class="form-hint" style="margin-bottom:1rem">Weekly scheduled routes in select McHenry, Kane &amp; Cook County areas only. <strong>Scheduled delivery windows</strong> are set by the business — not same-day or on-demand.</p>
               <div class="form-grid two">
                 <div class="form-row"><label for="first">First name</label><input class="input" id="first" required value="Alex" /></div>
                 <div class="form-row"><label for="last">Last name</label><input class="input" id="last" required value="Rivera" /></div>
@@ -60,8 +60,20 @@
               <div class="form-row">
                 <label for="zip">ZIP code</label>
                 <input class="input" id="zip" required pattern="\\d{5}" value="60601" maxlength="5" />
-                <div class="form-hint">Demo ZIPs: 60050, 60051 (McHenry); 60120, 60123, 60174 (Kane); 60601, 60016, 60018 (Cook). Scheduled delivery — not same-day.</div>
+                <div class="form-hint">Demo ZIPs: 60050, 60051 (McHenry); 60120, 60123, 60174 (Kane); 60601, 60016, 60018 (Cook). Weekly routes — not same-day.</div>
                 <div id="zip-msg" class="zip-result"></div>
+              </div>
+              <h2 style="font-size:1.15rem;margin:1.5rem 0 .5rem">Scheduled delivery window</h2>
+              <p class="form-hint" style="margin-bottom:1rem">Pick a window on our weekly route days. Example windows (set by the business):</p>
+              <div class="form-row">
+                <label for="window">Delivery window</label>
+                <select class="input" id="window" required>
+                  <option value="tue-am">Tuesday · Morning window</option>
+                  <option value="tue-pm">Tuesday · Afternoon window</option>
+                  <option value="thu-am" selected>Thursday · Morning window</option>
+                  <option value="thu-pm">Thursday · Afternoon window</option>
+                </select>
+                <div class="form-hint">Not same-day or on-demand — next available weekly route for your area.</div>
               </div>
               <h2 style="font-size:1.15rem;margin:1.5rem 0 1rem">Payment (demo)</h2>
               <div class="form-row"><label for="card">Card number</label><input class="input" id="card" value="4242 4242 4242 4242" disabled /></div>
@@ -100,24 +112,28 @@
             return;
           }
           const orderId = "DD-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+          const winEl = document.getElementById("window");
+          const windowLabel = winEl.options[winEl.selectedIndex].text;
           sessionStorage.setItem("dd_last_order", JSON.stringify({
             orderId,
             total: sub + (DD.checkZip(zipInput.value).ok && sub < 35 ? 4.99 : (sub >= 35 ? 0 : 4.99)),
             email: document.getElementById("email").value,
-            zip: zipInput.value
+            zip: zipInput.value,
+            window: windowLabel
           }));
           DD.clearCart();
-          showConfirm(orderId, document.getElementById("email").value);
+          showConfirm(orderId, document.getElementById("email").value, windowLabel);
         });
       }
 
-      function showConfirm(orderId, email) {
+      function showConfirm(orderId, email, windowLabel) {
         root.innerHTML = `
           <div class="confirm-card">
             <div class="check">✓</div>
             <h1 style="font-size:1.5rem">Order placed (demo)</h1>
             <p style="color:var(--slate-600)">Thanks! This is a mockup confirmation. No payment was processed.</p>
             <p><strong>Order #${orderId}</strong></p>
+            <p class="form-hint">Scheduled delivery window: <strong>${windowLabel || "—"}</strong> (weekly route — not same-day).</p>
             <p class="form-hint">A confirmation would be sent to ${email} in production.</p>
             <div style="display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:1.5rem">
               <a class="btn btn-primary" href="account.html">View account</a>
