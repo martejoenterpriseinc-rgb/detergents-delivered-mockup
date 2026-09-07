@@ -423,12 +423,34 @@ select.input:focus, .input:focus, textarea.input:focus {
 }
 .order-card .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem; }
 .status {
-  display: inline-flex; padding: .2rem .6rem; border-radius: 999px;
-  font-size: .75rem; font-weight: 700; text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: 0;
+  border-radius: 0;
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none; /* sentence case labels from markup */
+  background: transparent;
+  color: var(--slate-700);
+  line-height: 1.2;
 }
-.status.delivered { background: #dcfce7; color: #166534; }
-.status.transit { background: var(--sky-100); color: var(--sky-800); }
-.status.processing { background: #fef3c7; color: #92400e; }
+.status::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+/* Muted on-brand blues/greens — accessible contrast on white cards */
+.status.delivered { color: #14532d; }
+.status.delivered::before { background: #15803d; }
+.status.transit { color: var(--sky-800); }
+.status.transit::before { background: var(--sky-600); }
+.status.processing { color: var(--slate-700); }
+.status.processing::before { background: var(--sky-500); }
 
 /* FAQ */
 .faq-item {
